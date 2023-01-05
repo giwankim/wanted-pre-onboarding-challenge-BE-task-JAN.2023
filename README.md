@@ -110,7 +110,15 @@ Javascript already has some functions that enable functional programming. String
     type SomeFunctionReturnString = () => string
 
     function delay(f: SomeFunctionReturnString, seconds: number): Promise<string> {
-        // 해당 함수 내부를 구현해 주세요
+       return new Promise<string>((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            resolve(f());
+          } catch (error) {
+            reject(`${error.name}: ${error.message}`);
+          }
+        }, seconds * MS_IN_SECOND);
+      });
     };
 
     const success = () => {
