@@ -85,9 +85,6 @@
 
 2. Layered Architecture(계층 아키텍처)에 대해서 설명해 주세요
 
-One of the most common ways to modularize an information-rich program is to separate it into three broad layers:
-  1. presentation
-
 마틴 파울러의 **엔터프라이즈 애플리케이션 아키텍처 패턴**에서는 다음과 같은 3계층 분리를 데이터 중심 에플리케이션을 모듈화하는 대표적인 방법으로 제시한다.
 
 ![layers](https://martinfowler.com/bliki/images/presentationDomainDataLayering/all_basic.png)
@@ -95,58 +92,79 @@ One of the most common ways to modularize an information-rich program is to sepa
 계층화를 하는 이유 또한 다음과 같은 세가지로 이야기하고 있다.
 
 - 관심사 분리하여 개발자 뇌의 부하 분산
-- 모듈 구체적인 implementation 교체의 용이성
+- 모듈들의 구체적 구현체 교체의 용이성
 - 모듈 분기점들이 존재함으로서 좀 더 쉽게 테스트 가능한 코드를 작성하게 됨.
 
-3. Dependency Injection(의존성 주입)의 개념과 함께, 왜 필요한지 작성해 주세요
- 
-4. 본인이 사용하는 언어의 Functional Programming(함수형 프로그래밍) 스펙을 예제와 함께 소개해 주세요
+1. Dependency Injection(의존성 주입)의 개념과 함께, 왜 필요한지 작성해 주세요
 
-Javascript already has some functions that enable functional programming. String.prototype.slice, Array.prototype.filter, Array.prototype.join
+객체의 의존 관계를 외부에서 결정하고 런타임에 주입하는 것이 의존성 주입이다. 토비의 스프링에서는 다음의 세 가지 조건을 충족하는 작업을 의존관계 주입이라 말한다.
+
+- 클래스 모델이나 코드에는 런타임 시점의 의존관계가 드러나지 않는다. 그러기 위해서는 인터페이스만 의존하고 있어야 한다.
+- 런타임 시점의 의존관계는 컨테이너나 팩토리 같은 제3의 존재가 결정한다.
+- 의존관계는 사용할 오브젝트에 대한 레퍼런스를 외부에서 제공(주입)해줌으로써 만들어진다.
+
+이일민, 토비의 스프링 3.1, 에이콘(2012), p114
+
+DI의 장접으로는
+- 의존성이 줄어든다.
+- 재사용성이 높은 코드가 된다.
+- 테스트하기 좋은 코드가 된다.
+- 가독성이 높아진다.
+ 
+1. 본인이 사용하는 언어의 Functional Programming(함수형 프로그래밍) 스펙을 예제와 함께 소개해 주세요
+
+Higher-order 함수들인 filter, map, reduce는 함수형 프로그래밍에 중요한 요소이다.
+
+배열의 원소들의 합을 구하는 함수를 map을 사용하여 다음과 같이 구현할 수 있다.
+
+```js
+function sum(numbers) {
+  return numbers.reduce((a, b) => a + b, 0)
+}
+```
 
 5. (코드 작성) 다음 스펙을 만족하는 delay 함수를 작성해 주세요 (hint: Promise 사용)
 
-    ```ts
-    type SomeFunctionReturnString = () => string
+```ts
+type SomeFunctionReturnString = () => string
 
-    function delay(f: SomeFunctionReturnString, seconds: number): Promise<string> {
-       return new Promise<string>((resolve, reject) => {
-        setTimeout(() => {
-          try {
-            resolve(f());
-          } catch (error) {
-            reject(`${error.name}: ${error.message}`);
-          }
-        }, seconds * MS_IN_SECOND);
-      });
-    };
+function delay(f: SomeFunctionReturnString, seconds: number): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        resolve(f());
+      } catch (error) {
+        reject(`${error.name}: ${error.message}`);
+      }
+    }, seconds * MS_IN_SECOND);
+  });
+};
 
-    const success = () => {
-      return "successfully done";
-    };
+const success = () => {
+  return "successfully done";
+};
 
-    const fail = () => {
-      throw new Error("failed");
-    };
+const fail = () => {
+  throw new Error("failed");
+};
 
-    delay(success, 2)
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+delay(success, 2)
+  .then((res) => console.log(res))
+  .catch((e) => console.log(e));
 
-    delay(fail, 2)
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
-    ```
+delay(fail, 2)
+  .then((res) => console.log(res))
+  .catch((e) => console.log(e));
+```
 
-    **결과값**
+**결과값**
 
-    ```text
-    $ ts-node delay.ts
-    after 2 seconds
-    successfully done
-    Error: failed
-    ```
+```text
+$ ts-node delay.ts
+after 2 seconds
+successfully done
+Error: failed
+```
 
-5. 강의를 통해서 기대하는 바, 또는 얻고 싶은 팁을 적어주세요
-
+6. 강의를 통해서 기대하는 바, 또는 얻고 싶은 팁을 적어주세요
 함수형 사고 방식과 자바스크립트 함수형 문법을 익히고 실무에서 레거시 코드를 함수형으로 리팩토링 하는 방법과 이로 인헤 얻을 수 있는 효과에 대해서 배우고 싶습니다.
