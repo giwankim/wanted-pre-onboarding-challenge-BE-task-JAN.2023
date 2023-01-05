@@ -83,10 +83,28 @@
 }
   ```
 
-1. Layered Architecture(계층 아키텍처)에 대해서 설명해 주세요
-2. Dependency Injection(의존성 주입)의 개념과 함께, 왜 필요한지 작성해 주세요
-3. 본인이 사용하는 언어의 Functional Programming(함수형 프로그래밍) 스펙을 예제와 함께 소개해 주세요
-4. (코드 작성) 다음 스펙을 만족하는 delay 함수를 작성해 주세요 (hint: Promise 사용)
+2. Layered Architecture(계층 아키텍처)에 대해서 설명해 주세요
+
+One of the most common ways to modularize an information-rich program is to separate it into three broad layers:
+  1. presentation
+
+마틴 파울러의 **엔터프라이즈 애플리케이션 아키텍처 패턴**에서는 다음과 같은 3계층 분리를 데이터 중심 에플리케이션을 모듈화하는 대표적인 방법으로 제시한다.
+
+![layers](https://martinfowler.com/bliki/images/presentationDomainDataLayering/all_basic.png)
+
+계층화를 하는 이유 또한 다음과 같은 세가지로 이야기하고 있다.
+
+- 관심사 분리하여 개발자 뇌의 부하 분산
+- 모듈 구체적인 implementation 교체의 용이성
+- 모듈 분기점들이 존재함으로서 좀 더 쉽게 테스트 가능한 코드를 작성하게 됨.
+
+3. Dependency Injection(의존성 주입)의 개념과 함께, 왜 필요한지 작성해 주세요
+ 
+4. 본인이 사용하는 언어의 Functional Programming(함수형 프로그래밍) 스펙을 예제와 함께 소개해 주세요
+
+Javascript already has some functions that enable functional programming. String.prototype.slice, Array.prototype.filter, Array.prototype.join
+
+5. (코드 작성) 다음 스펙을 만족하는 delay 함수를 작성해 주세요 (hint: Promise 사용)
 
     ```ts
     type SomeFunctionReturnString = () => string
